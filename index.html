@@ -1,795 +1,517 @@
 <!DOCTYPE html>-scale=1"/>
   <title>Juanelos - Gastos</title>
   <link rel="stylesheet" href="styles.css">
-  <style>
-    body {
-      font-family: "Segoe UI", Arial;
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      margin: 0;
-      padding: 20px;
-      color: #333;
-    }
-
-    h1 {
-      text-align: center;
-      color: white;
-      margin-bottom: 30px;
-      letter-spacing: 0.5px;
-    }
-
-    .container {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .box {
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      width: 320px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    }
-
-    h3 { margin-top: 0; }
-
-    input, select {
-      width: 100%;
-      padding: 8px;
-      margin-top: 8px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
-    }
-
-    .row {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      margin-top: 10px;
-    }
-
-    button {
-      width: 100%;
-      background: #4a6cf7;
-      color: white;
-      border: none;
-      padding: 10px;
-      margin-top: 10px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: 0.15s;
-    }
-    button:hover { background: #3a55d1; }
-    button:active { transform: scale(0.98); }
-
-    .btn-mini {
-      width: auto;
-      padding: 7px 10px;
-      margin-top: 0;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 13px;
-    }
-
-    .btn-edit { background: #6c757d; }
-    .btn-edit:hover { background: #5a6268; }
-
-    .btn-delete { background: #dc3545; }
-    .btn-delete:hover { background: #c82333; }
-
-    .btn-save { background: #28a745; }
-    .btn-save:hover { background: #218838; }
-
-    .btn-cancel { background: #ff9800; }
-    .btn-cancel:hover { background: #e68900; }
-
-    #calcular {
-      background: #28a745;
-    }
-    #calcular:hover {
-      background: #218838;
-    }
-
-    ul {
-      background: #f9f9f9;
-      padding: 10px;
-      margin-top: 10px;
-      border-radius: 6px;
-      min-height: 120px;
-      list-style: none;
-    }
-
-    li {
-      opacity: 0;
-      transform: translateY(10px);
-      animation: aparecer 0.25s ease forwards;
-      padding: 8px 6px;
-      border-bottom: 1px solid #eee;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 8px;
-    }
-    li:last-child { border-bottom: none; }
-
-    @keyframes aparecer {
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .li-text {
-      flex: 1;
-      min-width: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .resultados {
-      max-width: 700px;
-      margin: 30px auto;
-    }
-
-    .resultado-positivo { color: #28a745; font-weight: bold; }
-    .resultado-negativo { color: #dc3545; font-weight: bold; }
-    .resultado-neutro { color: #6c757d; }
-    .resultado-transferencia { color: #007bff; font-weight: 600; }
-
-    .hint {
-      margin-top: 10px;
-      padding: 10px;
-      border-radius: 8px;
-      background: #f1f3ff;
-      color: #3b3f66;
-      font-size: 13px;
-      line-height: 1.3;
-    }
-
-    .muted { color: #6c757d; font-size: 13px; margin-top: 6px; }
-
-    .danger-note {
-      background: #ffe9eb;
-      color: #8a1f2a;
-      border-radius: 8px;
-      padding: 10px;
-      margin-top: 10px;
-      font-size: 13px;
-      line-height: 1.3;
-    }
-
-    .two {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 10px;
-    }
-  </style>
+  
 </head>
+<style>
+:root {
+  --primary: #6366f1;
+  --primary-dark: #4f46e5;
+  --success: #22c55e;
+  --danger: #ef4444;
+  --info: #3b82f6;
+  --bg: #0f172a;
+  --card: #ffffff;
+  --text: #1e293b;
+  --muted: #64748b;
+}
 
+/* ===== BASE ===== */
+body {
+  font-family: "Segoe UI", Arial;
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  margin: 0;
+  padding: 20px;
+  color: var(--text);
+}
+
+/* ===== TITULO ===== */
+h1 {
+  text-align: center;
+  color: white;
+  margin-bottom: 30px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* ===== CONTENEDOR ===== */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  flex-wrap: nowrap; /* 👈 IMPORTANTE */
+}
+
+/* ===== CARDS ===== */
+.box {
+  background: var(--card);
+  padding: 20px;
+  border-radius: 16px;
+  width: 320px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  transition: 0.2s;
+}
+
+.box:hover {
+  transform: translateY(-3px);
+}
+
+/* ===== INPUTS ===== */
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  box-sizing: border-box;
+  transition: 0.2s;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(99,102,241,0.2);
+}
+
+/* ===== BOTONES ===== */
+button {
+  width: 100%;
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+button:hover {
+  background: var(--primary-dark);
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+/* BOTONES PEQUEÑOS */
+.btn-mini {
+  width: auto;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+.btn-edit { background: #6b7280; }
+.btn-delete { background: var(--danger); }
+.btn-save { background: var(--success); }
+.btn-cancel { background: #f59e0b; }
+
+.btn-edit:hover { background: #4b5563; }
+.btn-delete:hover { background: #dc2626; }
+.btn-save:hover { background: #16a34a; }
+.btn-cancel:hover { background: #d97706; }
+
+/* BOTON CALCULAR */
+#calcular {
+  background: var(--success);
+}
+#calcular:hover {
+  background: #16a34a;
+}
+
+/* ===== LISTAS ===== */
+ul {
+  background: #f8fafc;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 10px;
+  min-height: 120px;
+  list-style: none;
+}
+
+/* ITEMS */
+li {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeIn 0.3s ease forwards;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  background: white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ANIMACION */
+@keyframes fadeIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* TEXTO */
+.li-text {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ===== RESULTADOS ===== */
+.resultados {
+  width: 320px;
+}
+
+/* TARJETAS DE RESULTADO */
+#resultados li {
+  font-weight: 500;
+  border-left: 5px solid transparent;
+}
+
+/* COLORES */
+.resultado-positivo {
+  background: #ecfdf5;
+  color: var(--success);
+  border-left-color: var(--success);
+}
+
+.resultado-negativo {
+  background: #fef2f2;
+  color: var(--danger);
+  border-left-color: var(--danger);
+}
+
+.resultado-neutro {
+  background: #f1f5f9;
+  color: var(--muted);
+}
+
+.resultado-transferencia {
+  background: #eff6ff;
+  color: var(--info);
+  border-left-color: var(--info);
+}
+
+/* ===== EXTRAS ===== */
+.row {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+</style>
 <body>
   <h1>JUANELOS - Gestor de Gastos</h1>
 
-  <div class="container">
+<div class="container">
 
-    <!-- AMIGOS -->
-    <div class="box">
-      <h3>Amigos</h3>
-      <input id="nombre" placeholder="Nombre" autocomplete="off" />
-      <button id="btnAgregarAmigo">Agregar</button>
+  <!-- AMIGOS -->
+  <div class="box">
+    <h3>Amigos</h3>
+    <input id="nombre" placeholder="Nombre">
+    <button id="btnAgregarAmigo">Agregar</button>
 
-      <div class="hint">
-        Tip: puedes <b>editar</b> o <b>eliminar</b> amigos desde la lista.
-        La validación evita nombres duplicados (ignora mayúsculas y espacios).
-      </div>
-
-      <ul id="listaAmigos"></ul>
-    </div>
-
-    <!-- GASTOS -->
-    <div class="box">
-      <h3>Gastos</h3>
-
-      <select id="cmbAmigos"></select>
-      <input id="monto" type="number" step="0.01" min="0.01" placeholder="Monto" />
-
-      <button id="btnAgregarGasto">Agregar gasto</button>
-
-      <div class="muted">También puedes editar/eliminar gastos desde la lista.</div>
-
-      <ul id="listaGastos"></ul>
-    </div>
-
+    <ul id="listaAmigos"></ul>
   </div>
 
-  <!-- RESULTADOS -->
+  <!-- GASTOS -->
+  <div class="box">
+    <h3>Gastos</h3>
+
+    <select id="cmbAmigos"></select>
+    <input id="monto" placeholder="Monto">
+
+    <!-- NUEVO -->
+    <select id="categoria">
+      <option>Comida</option>
+      <option>Bebida</option>
+      <option>Postre</option>
+    </select>
+
+    <h4>¿Quiénes participan?</h4>
+    <div id="participantes"></div>
+
+    <button id="btnAgregarGasto">Agregar gasto</button>
+
+    <ul id="listaGastos"></ul>
+  </div>
+<!-- RESULTADOS -->
   <div class="box resultados">
     <h3>Resultados</h3>
-    <button id="calcular">Calcular</button>    
-    <button id="descargarPdf" style="margin-top:10px;background:#007bff">
-  Descargar PDF </button>
-
-     <button id="btnWhatsApp">Compartir por WhatsApp</button> 
+    <button id="calcular">Calcular</button>
+    <button onclick="compartirWhatsApp()">Compartir por WhatsApp</button>
     <ul id="resultados"></ul>
-
-    <div class="danger-note">
-      Nota: si eliminas un amigo, se eliminarán sus gastos asociados para mantener coherencia.
-    </div>
   </div>
+
+
+
+</div>
+
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js">
-
   </script>
+
   <script>
-    // =========================
-    //         DATOS
-    // =========================
-    let amigos = []; // { id, nombre }
-    let gastos = []; // { id, amigoId, monto }
-
-    const $ = (id) => document.getElementById(id);
-
-    // Normaliza para comparar: trim + colapsa espacios + minúsculas
-    function normalizarNombre(nombre) {
-      return nombre
-        .trim()
-        .replace(/\s+/g, " ")
-        .toLowerCase();
-    }
-
-    function generarId() {
-      return (crypto?.randomUUID?.() ?? (Date.now().toString(36) + Math.random().toString(36).slice(2)));
-    }
-
-    function formatearDinero(n) {
-      // Ajusta si quieres: "€" o "$"
-      return n.toFixed(2);
-    }
-
-    // =========================
-    //     RENDERIZADO UI
-    // =========================
-    function renderAmigos() {
-      const ul = $("listaAmigos");
-      ul.innerHTML = "";
-
-      if (amigos.length === 0) {
-        const li = document.createElement("li");
-        li.innerHTML = `<span class="li-text resultado-neutro">Aún no hay amigos.</span>`;
-        ul.appendChild(li);
-        return;
-      }
-
-      for (const a of amigos) {
-        const li = document.createElement("li");
-
-        const span = document.createElement("span");
-        span.className = "li-text";
-        span.textContent = a.nombre;
-
-        const actions = document.createElement("div");
-        actions.className = "row";
-        actions.style.marginTop = "0";
-
-        const btnEdit = document.createElement("button");
-        btnEdit.className = "btn-mini btn-edit";
-        btnEdit.textContent = "Editar";
-        btnEdit.onclick = () => iniciarEdicionAmigo(a.id);
-
-        const btnDel = document.createElement("button");
-        btnDel.className = "btn-mini btn-delete";
-        btnDel.textContent = "Borrar";
-        btnDel.onclick = () => borrarAmigo(a.id);
-
-        actions.appendChild(btnEdit);
-        actions.appendChild(btnDel);
-
-        li.appendChild(span);
-        li.appendChild(actions);
-        ul.appendChild(li);
-      }
-    }
-
-    function renderComboAmigos() {
-      const sel = $("cmbAmigos");
-      sel.innerHTML = "";
-
-      if (amigos.length === 0) {
-        const op = document.createElement("option");
-        op.text = "Primero agrega amigos...";
-        op.value = "";
-        sel.add(op);
-        sel.disabled = true;
-        $("btnAgregarGasto").disabled = true;
-        return;
-      }
-
-      sel.disabled = false;
-      $("btnAgregarGasto").disabled = false;
-
-      for (const a of amigos) {
-        const op = document.createElement("option");
-        op.text = a.nombre;
-        op.value = a.id;
-        sel.add(op);
-      }
-    }
-
-    function nombrePorId(amigoId) {
-      const a = amigos.find(x => x.id === amigoId);
-      return a ? a.nombre : "(eliminado)";
-    }
-
-    function renderGastos() {
-      const ul = $("listaGastos");
-      ul.innerHTML = "";
-
-      if (gastos.length === 0) {
-        const li = document.createElement("li");
-        li.innerHTML = `<span class="li-text resultado-neutro">Aún no hay gastos.</span>`;
-        ul.appendChild(li);
-        return;
-      }
-
-      for (const g of gastos) {
-        const li = document.createElement("li");
-
-        const span = document.createElement("span");
-        span.className = "li-text";
-        span.textContent = `${nombrePorId(g.amigoId)} pagó ${formatearDinero(g.monto)}`;
-
-        const actions = document.createElement("div");
-        actions.className = "row";
-        actions.style.marginTop = "0";
-
-        const btnEdit = document.createElement("button");
-        btnEdit.className = "btn-mini btn-edit";
-        btnEdit.textContent = "Editar";
-        btnEdit.onclick = () => iniciarEdicionGasto(g.id);
-
-        const btnDel = document.createElement("button");
-        btnDel.className = "btn-mini btn-delete";
-        btnDel.textContent = "Borrar";
-        btnDel.onclick = () => borrarGasto(g.id);
-
-        actions.appendChild(btnEdit);
-        actions.appendChild(btnDel);
-
-        li.appendChild(span);
-        li.appendChild(actions);
-        ul.appendChild(li);
-      }
-    }
-
-    // =========================
-    //     CRUD AMIGOS
-    // =========================
-    function existeNombreDuplicado(nombre, excluirId = null) {
-      const norm = normalizarNombre(nombre);
-      return amigos.some(a => a.id !== excluirId && normalizarNombre(a.nombre) === norm);
-    }
-
-    function agregarAmigo() {
-      const input = $("nombre");
-      const nombre = input.value.trim().replace(/\s+/g, " ");
-
-      if (nombre === "") return;
-
-      if (existeNombreDuplicado(nombre)) {
-        alert("Ese nombre ya existe. Prueba con otro.");
-        return;
-      }
-
-      amigos.push({ id: generarId(), nombre });
-
-      input.value = "";
-      renderAmigos();
-      renderComboAmigos();
-    }
-
-    function iniciarEdicionAmigo(amigoId) {
-      const ul = $("listaAmigos");
-      const idx = amigos.findIndex(a => a.id === amigoId);
-      if (idx === -1) return;
-
-      // Re-render para encontrar el li correcto según orden actual
-      renderAmigos();
-
-      const li = ul.children[idx];
-      li.innerHTML = "";
-
-      const input = document.createElement("input");
-      input.value = amigos[idx].nombre;
-      input.style.marginTop = "0";
-
-      const actions = document.createElement("div");
-      actions.className = "row";
-      actions.style.marginTop = "0";
-
-      const btnSave = document.createElement("button");
-      btnSave.className = "btn-mini btn-save";
-      btnSave.textContent = "Guardar";
-      btnSave.onclick = () => guardarEdicionAmigo(amigoId, input.value);
-
-      const btnCancel = document.createElement("button");
-      btnCancel.className = "btn-mini btn-cancel";
-      btnCancel.textContent = "Cancelar";
-      btnCancel.onclick = () => renderAmigos();
-
-      actions.appendChild(btnSave);
-      actions.appendChild(btnCancel);
-
-      li.appendChild(input);
-      li.appendChild(actions);
-
-      input.focus();
-      input.select();
-      input.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") btnSave.click();
-        if (e.key === "Escape") btnCancel.click();
-      });
-    }
-
-    function guardarEdicionAmigo(amigoId, nuevoNombre) {
-      nuevoNombre = nuevoNombre.trim().replace(/\s+/g, " ");
-      if (nuevoNombre === "") return;
-
-      if (existeNombreDuplicado(nuevoNombre, amigoId)) {
-        alert("Ya existe otro amigo con ese nombre.");
-        return;
-      }
-
-      const amigo = amigos.find(a => a.id === amigoId);
-      if (!amigo) return;
-
-      amigo.nombre = nuevoNombre;
-
-      renderAmigos();
-      renderComboAmigos();
-      renderGastos(); // para que se actualice el texto mostrado
-    }
-
-    function borrarAmigo(amigoId) {
-      const amigo = amigos.find(a => a.id === amigoId);
-      if (!amigo) return;
-
-      const ok = confirm(`¿Eliminar a "${amigo.nombre}"? También se eliminarán sus gastos.`);
-      if (!ok) return;
-
-      amigos = amigos.filter(a => a.id !== amigoId);
-      gastos = gastos.filter(g => g.amigoId !== amigoId);
-
-      renderAmigos();
-      renderComboAmigos();
-      renderGastos();
-
-      // Limpia resultados si estaban calculados
-      $("resultados").innerHTML = "";
-    }
-
-    // =========================
-    //     CRUD GASTOS
-    // =========================
-    function agregarGasto() {
-      if (amigos.length === 0) return;
-
-      const amigoId = $("cmbAmigos").value;
-      const monto = parseFloat($("monto").value);
-
-      if (!amigoId || isNaN(monto) || monto <= 0) return;
-
-      gastos.push({ id: generarId(), amigoId, monto });
-
-      $("monto").value = "";
-      renderGastos();
-    }
-
-    function iniciarEdicionGasto(gastoId) {
-      const ul = $("listaGastos");
-      const idx = gastos.findIndex(g => g.id === gastoId);
-      if (idx === -1) return;
-
-      // Re-render para encontrar el li correcto según orden actual
-      renderGastos();
-
-      const li = ul.children[idx];
-      li.innerHTML = "";
-
-      const wrap = document.createElement("div");
-      wrap.style.flex = "1";
-      wrap.style.display = "grid";
-      wrap.style.gridTemplateColumns = "1fr 1fr";
-      wrap.style.gap = "8px";
-
-      const sel = document.createElement("select");
-      for (const a of amigos) {
-        const op = document.createElement("option");
-        op.value = a.id;
-        op.textContent = a.nombre;
-        sel.appendChild(op);
-      }
-      sel.value = gastos[idx].amigoId;
-
-      const inputMonto = document.createElement("input");
-      inputMonto.type = "number";
-      inputMonto.step = "0.01";
-      inputMonto.min = "0.01";
-      inputMonto.value = gastos[idx].monto.toFixed(2);
-
-      wrap.appendChild(sel);
-      wrap.appendChild(inputMonto);
-
-      const actions = document.createElement("div");
-      actions.className = "row";
-      actions.style.marginTop = "0";
-
-      const btnSave = document.createElement("button");
-      btnSave.className = "btn-mini btn-save";
-      btnSave.textContent = "Guardar";
-      btnSave.onclick = () => guardarEdicionGasto(gastoId, sel.value, inputMonto.value);
-
-      const btnCancel = document.createElement("button");
-      btnCancel.className = "btn-mini btn-cancel";
-      btnCancel.textContent = "Cancelar";
-      btnCancel.onclick = () => renderGastos();
-
-      actions.appendChild(btnSave);
-      actions.appendChild(btnCancel);
-
-      li.appendChild(wrap);
-      li.appendChild(actions);
-
-      inputMonto.focus();
-      inputMonto.select();
-      inputMonto.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") btnSave.click();
-        if (e.key === "Escape") btnCancel.click();
-      });
-    }
-
-    function guardarEdicionGasto(gastoId, nuevoAmigoId, nuevoMontoStr) {
-      const nuevoMonto = parseFloat(nuevoMontoStr);
-      if (!nuevoAmigoId || isNaN(nuevoMonto) || nuevoMonto <= 0) return;
-
-      const gasto = gastos.find(g => g.id === gastoId);
-      if (!gasto) return;
-
-      gasto.amigoId = nuevoAmigoId;
-      gasto.monto = nuevoMonto;
-
-      renderGastos();
-    }
-
-    function borrarGasto(gastoId) {
-      gastos = gastos.filter(g => g.id !== gastoId);
-      renderGastos();
-
-      $("resultados").innerHTML = "";
-    }
-
-    // =========================
-    //       CALCULAR
-    // =========================
-    function calcular() {
-      const lista = $("resultados");
-      lista.innerHTML = "";
-
-      if (amigos.length === 0) return;
-      if (gastos.length === 0) return;
-
-      // Totales por amigoId
-      const totales = {};
-      amigos.forEach(a => totales[a.id] = 0);
-
-      gastos.forEach(g => {
-        if (totales[g.amigoId] !== undefined) {
-          totales[g.amigoId] += g.monto;
-        }
-      });
-
-      const total = Object.values(totales).reduce((a,b) => a + b, 0);
-      const promedio = total / amigos.length;
-
-      agregarResultado(`Total: ${formatearDinero(total)}`);
-      agregarResultado(`Promedio por persona: ${formatearDinero(promedio)}`);
-      agregarResultado("");
-
-      for (const a of amigos) {
-        const diff = totales[a.id] - promedio;
-
-        if (diff > 0) {
-          agregarResultado(`${a.nombre} pagó de más: +${formatearDinero(diff)}`, "positivo");
-        } else if (diff < 0) {
-          agregarResultado(`${a.nombre} debe: ${formatearDinero(diff)}`, "negativo");
-        } else {
-          agregarResultado(`${a.nombre} está al día`, "neutro");
-        }
-      }
-
-      agregarResultado("");
-      agregarResultado("--- TRANSFERENCIAS ---");
-      calcularTransferencias(totales, promedio);
-    }
-
-    function calcularTransferencias(totales, promedio) {
-      const deudores = [];
-      const acreedores = [];
-
-      for (const a of amigos) {
-        const diff = totales[a.id] - promedio;
-
-        if (diff < 0) deudores.push({ id: a.id, monto: -diff });
-        else if (diff > 0) acreedores.push({ id: a.id, monto: diff });
-      }
-
-      let i = 0, j = 0;
-
-      while (i < deudores.length && j < acreedores.length) {
-        const monto = Math.min(deudores[i].monto, acreedores[j].monto);
-
-        agregarResultado(
-          `${nombrePorId(deudores[i].id)} → ${nombrePorId(acreedores[j].id)}: ${formatearDinero(monto)}`,
-          "transferencia"
-        );
-
-        deudores[i].monto -= monto;
-        acreedores[j].monto -= monto;
-
-        // Evita problemas con decimales flotantes
-        if (deudores[i].monto < 0.000001) deudores[i].monto = 0;
-        if (acreedores[j].monto < 0.000001) acreedores[j].monto = 0;
-
-        if (deudores[i].monto === 0) i++;
-        if (acreedores[j].monto === 0) j++;
-      }
-
-      if (deudores.length === 0 && acreedores.length === 0) {
-        agregarResultado("No hay transferencias necesarias.", "neutro");
-      }
-    }
-    // COMPARTIR PDF POR WHATSAPP
-    
-function descargarResultadosPDF() {
-  const resultados = document.querySelectorAll("#resultados li");
-
-  if (resultados.length === 0) {
-    alert("No hay resultados para generar el PDF.");
-    return;
-  }
-
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-
-  let y = 20;
-
-  // ===== TÍTULO =====
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(18);
-  doc.text("JUANELOS", 105, y, { align: "center" });
-
-  y += 8;
-
-  doc.setFontSize(12);
-  doc.setFont("helvetica", "normal");
-  doc.text("Resumen de gastos entre amigos", 105, y, { align: "center" });
-
-  y += 10;
-
-  // ===== FECHA =====
-  doc.setFontSize(10);
-  doc.text(`Fecha: ${new Date().toLocaleString()}`, 10, y);
-
-  y += 10;
-
-  // ===== CAJA =====
-  doc.setDrawColor(200);
-  doc.rect(8, y - 5, 194, 260);
-
-  y += 5;
-
-  // ===== CONTENIDO =====
-  doc.setFontSize(11);
-
-  resultados.forEach(li => {
-    const texto = li.textContent.trim();
-
-    if (texto === "") {
-      y += 4;
-      return;
-    }
-
-    // Nueva página si se pasa
-    if (y > 270) {
-      doc.addPage();
-      y = 20;
-    }
-
-    // ===== COLORES =====
-    if (texto.includes("pagó de más")) {
-      doc.setTextColor(0, 150, 0); // verde
-    } else if (texto.includes("debe")) {
-      doc.setTextColor(200, 0, 0); // rojo
-    } else if (texto.includes("→")) {
-      doc.setTextColor(0, 0, 180); // azul
-    } else {
-      doc.setTextColor(0, 0, 0); // negro
-    }
-
-    // ===== DESTACAR TÍTULOS =====
-    if (texto.includes("Total") || texto.includes("Promedio")) {
-      doc.setFont("helvetica", "bold");
-    } else {
-      doc.setFont("helvetica", "normal");
-    }
-
-    doc.text(texto, 12, y);
-    y += 6;
-  });
-
-  // ===== FOOTER =====
-  doc.setFontSize(9);
-  doc.setTextColor(120);
-  doc.text("Generado por JUANELOS APP", 105, 290, { align: "center" });
-
-  // ===== DESCARGA =====
-  const fechaArchivo = new Date().toISOString().slice(0,10);
-  doc.save(`juanelos_${fechaArchivo}.pdf`);
+    // ===== DATOS =====
+let amigos = []; // {id, nombre}
+let gastos = []; // {id, amigoId, monto, categoria, participantes[]}
+
+const $ = (id) => document.getElementById(id);
+
+// ===== UTIL =====
+function generarId() {
+  return Date.now().toString();
 }
-function compartirWhatsApp() {
-  const resultados = document.querySelectorAll("#resultados li");
 
-  if (resultados.length === 0) {
-    alert("No hay resultados para compartir.");
+function nombrePorId(id) {
+  const a = amigos.find(x => x.id === id);
+  return a ? a.nombre : "";
+}
+
+// ===== AMIGOS =====
+function agregarAmigo() {
+  const nombre = $("nombre").value.trim();
+  if (!nombre) return;
+
+  amigos.push({ id: generarId(), nombre });
+
+  $("nombre").value = "";
+  renderAmigos();
+  renderComboAmigos();
+  renderParticipantes();
+}
+
+function renderAmigos() {
+  const ul = $("listaAmigos");
+  ul.innerHTML = "";
+
+  amigos.forEach(a => {
+    let li = document.createElement("li");
+    li.textContent = a.nombre;
+    ul.appendChild(li);
+  });
+}
+
+function renderComboAmigos() {
+  const sel = $("cmbAmigos");
+  sel.innerHTML = "";
+
+  amigos.forEach(a => {
+    let op = document.createElement("option");
+    op.value = a.id;
+    op.textContent = a.nombre;
+    sel.appendChild(op);
+  });
+}
+
+// ===== PARTICIPANTES =====
+function renderParticipantes() {
+  const cont = $("participantes");
+  cont.innerHTML = "";
+
+  amigos.forEach(a => {
+    const label = document.createElement("label");
+
+    const check = document.createElement("input");
+    check.type = "checkbox";
+    check.value = a.id;
+    check.checked = true;
+
+    label.appendChild(check);
+    label.append(" " + a.nombre);
+
+    cont.appendChild(label);
+    cont.appendChild(document.createElement("br"));
+  });
+}
+
+// ===== GASTOS =====
+function agregarGasto() {
+  const amigoId = $("cmbAmigos").value;
+  const monto = parseFloat($("monto").value);
+  const categoria = $("categoria").value;
+
+  const checks = document.querySelectorAll("#participantes input:checked");
+  const participantes = Array.from(checks).map(c => c.value);
+
+  if (!amigoId || isNaN(monto) || participantes.length === 0) return;
+
+  gastos.push({
+    id: generarId(),
+    amigoId,
+    monto,
+    categoria,
+    participantes
+  });
+
+  $("monto").value = "";
+  renderGastos();
+}
+
+function renderGastos() {
+  const ul = $("listaGastos");
+  ul.innerHTML = "";
+
+  gastos.forEach(g => {
+    let li = document.createElement("li");
+
+    let participantesTexto = g.participantes
+      .map(id => nombrePorId(id))
+      .join(", ");
+
+    //li.textContent =
+      //`${nombrePorId(g.amigoId)} pagó ${g.monto.toFixed(2)} (${g.categoria}) [${participantesTexto}]`;
+      li.innerHTML = `
+        <strong>${nombrePorId(g.amigoId)}</strong> pagó 
+        <span style="color:#007bff;">$${g.monto.toFixed(2)}</span><br>
+        <small>${g.categoria}</small><br>
+        <small style="color:gray;">${participantesTexto}</small>
+`;
+
+    ul.appendChild(li);
+  });
+}
+// ===== COMAPRTIR POR WSP =====
+function compartirWhatsApp() {
+  let items = document.querySelectorAll("#resultados li");
+
+  if (items.length === 0) {
+    alert("Primero calculá los resultados");
     return;
   }
 
-  let mensaje = "📊 *JUANELOS - Resumen de gastos*\n\n";
+  let mensaje = "📊 *JUANELOS - Resultados*\n\n";
 
-  resultados.forEach(li => {
-    const texto = li.textContent.trim();
-
-    if (texto !== "") {
-      mensaje += texto + "\n";
-    }
+  items.forEach(li => {
+    mensaje += li.textContent + "\n";
   });
 
-  mensaje += "\n💸 Generado con JUANELOS APP";
+  let url = "https://wa.me/?text=" + encodeURIComponent(mensaje);
 
-  // Codificar para URL
-  const url = "https://wa.me/?text=" + encodeURIComponent(mensaje);
-
-  // Abrir WhatsApp
   window.open(url, "_blank");
 }
-    //         UTIL
-    // =========================
-    function agregarResultado(texto, tipo = "") {
-      const li = document.createElement("li");
-      li.textContent = texto;
+// ===== CALCULAR =====
+function calcular() {
+  const lista = $("resultados");
+  lista.innerHTML = "";
 
-      if (tipo === "positivo") li.classList.add("resultado-positivo");
-      else if (tipo === "negativo") li.classList.add("resultado-negativo");
-      else if (tipo === "neutro") li.classList.add("resultado-neutro");
-      else if (tipo === "transferencia") li.classList.add("resultado-transferencia");
+  if (amigos.length === 0 || gastos.length === 0) return;
 
-      $("resultados").appendChild(li);
-    }
+  let totales = {};
+  amigos.forEach(a => totales[a.id] = 0);
 
-    // =========================
-    //     EVENTOS / INICIO
-    // =========================
-    $("btnAgregarAmigo").addEventListener("click", agregarAmigo);
-    $("btnAgregarGasto").addEventListener("click", agregarGasto);
-    $("calcular").addEventListener("click", calcular);
-    $("descargarPdf").addEventListener("click", descargarResultadosPDF);
-    $("btnWhatsApp").addEventListener("click", compartirWhatsApp);
+  // 💥 CLAVE
+  gastos.forEach(g => {
+    const parte = g.monto / g.participantes.length;
 
-    $("nombre").addEventListener("keydown", (e) => {
-      if (e.key === "Enter") agregarAmigo();
+    g.participantes.forEach(id => {
+      totales[id] -= parte;
     });
-    $("monto").addEventListener("keydown", (e) => {
-      if (e.key === "Enter") agregarGasto();
-    });
+
+    totales[g.amigoId] += g.monto;
+  });
+
+  let total = gastos.reduce((acc, g) => acc + g.monto, 0);
+  let promedio = total / amigos.length;
+
+  agregarResultado("💰 Total gastado: " + total.toFixed(2));
+  agregarResultado("👥 Promedio: " + promedio.toFixed(2));
+  agregarResultado("");
+
+  amigos.forEach(a => {
+    let diff = totales[a.id];
+
+    if (diff > 0)
+      agregarResultado(`${a.nombre} recibe: +${diff.toFixed(2)}`, "positivo");
+    else if (diff < 0)
+      agregarResultado(`${a.nombre} debe: ${diff.toFixed(2)}`, "negativo");
+    else
+      agregarResultado(`${a.nombre} está al día`, "neutro");
+  });
+
+  agregarResultado("");
+  agregarResultado("--- TRANSFERENCIAS ---");
+
+  calcularTransferencias(totales);
+}
+
+// ===== TRANSFERENCIAS =====
+function calcularTransferencias(totales) {
+  let deudores = [];
+  let acreedores = [];
+
+  amigos.forEach(a => {
+    let diff = totales[a.id];
+
+    if (diff < 0)
+      deudores.push({ id: a.id, monto: -diff });
+    else if (diff > 0)
+      acreedores.push({ id: a.id, monto: diff });
+  });
+
+  let i = 0, j = 0;
+
+  while (i < deudores.length && j < acreedores.length) {
+    let monto = Math.min(deudores[i].monto, acreedores[j].monto);
+
+    agregarResultado(
+      `${nombrePorId(deudores[i].id)} → ${nombrePorId(acreedores[j].id)}: ${monto.toFixed(2)}`,
+      "transferencia"
+    );
+
+    deudores[i].monto -= monto;
+    acreedores[j].monto -= monto;
+
+    if (deudores[i].monto === 0) i++;
+    if (acreedores[j].monto === 0) j++;
+  }
+}
+
+// ===== RESULTADOS =====
+function agregarResultado(texto, tipo = "") {
+  const li = document.createElement("li");
+  li.textContent = texto;
+
+  li.style.padding = "10px";
+  li.style.margin = "6px 0";
+  li.style.borderRadius = "8px";
+  li.style.fontWeight = "500";
+
+  if (tipo === "positivo") {
+    li.style.backgroundColor = "#d4edda";
+    li.style.color = "#155724";
+  } 
+  else if (tipo === "negativo") {
+    li.style.backgroundColor = "#f8d7da";
+    li.style.color = "#721c24";
+  } 
+  else if (tipo === "transferencia") {
+    li.style.backgroundColor = "#d1ecf1";
+    li.style.color = "#0c5460";
+  } 
+  else {
+    li.style.backgroundColor = "#f1f1f1";
+  }
+
+  $("resultados").appendChild(li);
+}
+
+// ===== EVENTOS =====
+$("btnAgregarAmigo").addEventListener("click", agregarAmigo);
+$("btnAgregarGasto").addEventListener("click", agregarGasto);
+$("calcular").addEventListener("click", calcular);    
 
     // Render inicial
     renderAmigos();
